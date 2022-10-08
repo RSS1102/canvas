@@ -1,92 +1,75 @@
-import { useEffect } from 'react'
-import './App.css'
+import React from "react"
+import { Router } from "react-router-dom"
+import LazyLoad from "./route/config/LazyLoad"
+const modules = import.meta.glob('./canvas/**/index.tsx', {
+  import: 'default',
+})
+console.log("modules", modules,)
+const routeTree = []
+for (const pathString in modules) {
+  /**
+   * @desc 处理字符串 `./xxx/xxx/index.tsx`
+   * @desc 1.`substring`接去掉最前的"./" 得到的结果是`xxx/xxx/index.tsx`
+   * @desc 2.`replace`去掉`/index.tsx`得到的结果是`xxx/xxx` 
+   * @desc 2. `split`根据`/`切割数组 
+   */
+  console.log(pathString)
+  const path = pathString.substring(9).replace(/(\/index\.tsx|\.tsx)$/, "")
+  const pathArr = path.split('/')
+  console.log(path)
+  console.log(pathArr)
+
+  // 动态导入必须 以`./foo/${bar}.js`, `https://github.com/rollup/plugins/tree/master/packages/dynamic-import-vars#limitations
+
+  routeTree.push(
+    {
+      path: path,
+      element: LazyLoad(React.lazy(() => import(`./canves/${path}.tsx`))),
+      children: [],
+    },
+  )
+  /**
+ * @desc 需求数组样式
+ * @desc 根据目录层级生成children
+ * @desc 如只有文件夹没有`index.tsx`则不生成element，但依然生成路由层级
+ * @desc  import(`./canvas/rotatingstars/index`))), 可以写成 import(`./canves/${path}.tsx`))),
+ * 
+ * 
+ */
+  routeTree.push(
+    {
+      path: 'rotatingstars',
+      element: LazyLoad(React.lazy(() => import(`./canvas/rotatingstars/index`))),
+      children: [],
+    },
+    {
+      path: 'start',
+      element: LazyLoad(React.lazy(() => import(`./canvas/start/index`))),
+      children: [
+        {
+          path: 'start1',
+          element: LazyLoad(React.lazy(() => import(`./canvas/start/start1/index`))),
+          children: [
+            {
+              path: 'start2',
+              element: LazyLoad(React.lazy(() => import(`./canvas/start/start1/start2/index`))),
+              children: [],
+            },
+          ],
+        },
+      ],
+    },
+  )
+}
+
+
+
 
 function App() {
-  useEffect(() => {
-    function random(min: number, max: number) {
-      if (arguments.length < 2) {
-        max = min
-        min = 0
-      } else if (min > max) {
-        let v = min;
-        min = max;
-        max = v
-      }
-      return Math.floor(Math.random() * (max - min + 1)) + min;
-    }
-    let canvas = document.querySelector("canvas")
-    let ctx = canvas!.getContext('2d') as CanvasRenderingContext2D
-    let w = canvas!.width = window.innerWidth
-    let h = canvas!.height = window.innerHeight
-    let stars: Array<any> = []
-    let maxNum = 300
-    let starCanvas = document.createElement('canvas')
-    let starCtx = starCanvas.getContext('2d') as CanvasRenderingContext2D
-    starCanvas.width = 100
-    starCanvas.height = 100
-    let r = 50
-    let gradient2 = starCtx.createRadialGradient(r, r, 0, r, r, r)
-    gradient2.addColorStop(0.025, '#fff')
-    gradient2.addColorStop(0.15, 'hsl(211,61%,33%)')
-    gradient2.addColorStop(0.15, 'hsl(211,61%,6%)')
-    gradient2.addColorStop(1, 'transparent')
-    starCtx.fillStyle = gradient2
-    starCtx.arc(r, r, r, 0, Math.PI * 2)
-    starCtx.fill()
-    ctx.beginPath()
-    const maxOrbit = (x: any, y: any) => {
-      let max = Math.max(x, y)
-      let diameter = Math.round(Math.sqrt(max * max + max * max));
-      return diameter / 2
-    };
-    class Star {
-      orbitRadius = random(0, maxOrbit(w, h))
-      radius = random(60, this.orbitRadius) / 6
-      orbitX = w / 2
-      orbitY = h / 2
-      timePassed = (random(0, maxNum))
-      speed = random(0, this.orbitRadius) / 50000
-      alpha = random(2, 10) / 10
-      constructor() {
-        stars.push(this)
-      };
-      draw() {
-        let x = Math.sin(this.timePassed) * this.orbitRadius + this.orbitX
-        let y = Math.cos(this.timePassed) * this.orbitRadius + this.orbitY
-        let twinkle = random(0, 10)
-        if (twinkle === 1 && this.alpha > 0) {
-          this.alpha -= 0.05
-        } else if (twinkle === 2 && this.alpha < 1) {
-          this.alpha += 0.05
-        }
-        ctx.globalAlpha = this.alpha
-        ctx.drawImage(starCanvas, x - this.radius / 2, y - this.radius / 2, this.radius, this.radius)
-        this.timePassed += this.speed
-
-      }
-    }
-    for (let i = 0; i < maxNum; i++) {
-      new Star()
-    }
-
-    function update() {
-      ctx.globalCompositeOperation = 'source-over'
-      // ctx.globalAlpha = 0.8
-      ctx.fillStyle = '#060f19'
-      ctx.fillRect(0, 0, w, h)
-      ctx.globalCompositeOperation = 'lighter'
-      for (let i = 0; i < stars.length; i++) {
-        stars[i].draw()
-      }
-      window.requestAnimationFrame(update)
-    }
-    update()
-  }, [])
-
 
   return (
     <div className="App">
-      <canvas id='canvas'></canvas>
+      13
     </div>
   )
 }
