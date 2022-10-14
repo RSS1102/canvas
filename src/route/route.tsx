@@ -33,7 +33,6 @@ Object.entries(modules).map(([path, element], i) => {
     dirs.shift()
     // if (!dirs[0]) dirs.push('/')
     dirs.unshift('/')
-    console.log(dirs)
     formatterRoute(dirs, element, routeTree)
 })
 
