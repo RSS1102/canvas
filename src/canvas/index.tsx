@@ -19,7 +19,7 @@ function Index() {
     }, [dirsRoute])
     return (
         <>
-            <div>{dirsRoute.map((e, i) => {
+            <div className="outlet-index">{dirsRoute.map((e, i) => {
                 return (<i key={i}>
                     <button onClick={() => { navigate(e) }}>{e.slice(e.lastIndexOf('/'))}</button>
                 </i>)

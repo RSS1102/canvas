@@ -5,3 +5,6 @@ button {
   background-color: rgba(0, 157, 255, 0.818);
   border-radius: 6px;
 }
+.outlet-index {
+  position: absolute;
+}
