@@ -1,14 +1,8 @@
-import { modules } from "@/route/route";
+
+import { dirsPath } from "@/route/route";
 import { useEffect, useState } from "react";
 import { Outlet, useNavigate } from "react-router-dom";
 import "./index.css";
-let dirsPath: string[] = []
-
-Object.entries(modules).map(([path, element], i) => {
-    let dirs = path.replace(/(^\.\.\/|canvas|\/index\.tsx$)/g, '')
-    dirs == "" ? dirs = '/' : ""
-    dirsPath.push(dirs)
-})
 
 function Index() {
     const [dirsRoute, setDirsRoute] = useState<string[]>([])

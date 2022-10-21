@@ -1,5 +1,5 @@
 import { HashRouter, useRoutes } from "react-router-dom"
-import { routeTree } from "@/route/route"
+import { routeTree } from "@/route/routeTree"
 import "@/App.css"
 const Router = () => {
   const routes = useRoutes(routeTree)

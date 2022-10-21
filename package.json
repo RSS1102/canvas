@@ -4,9 +4,11 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite",
-    "build": "tsc && vite build",
-    "preview": "vite preview"
+    "dev": "vite --mode development",
+    "build": "tsc && vite build --mode production",
+    "preview": "vite preview",
+    "test": "playwright test",
+    "test:report": "playwright show-report"
   },
   "dependencies": {
     "react": "^18.2.0",
@@ -14,6 +16,7 @@
     "react-router-dom": "^6.4.2"
   },
   "devDependencies": {
+    "@playwright/test": "^1.27.1",
     "@types/node": "^18.8.3",
     "@types/react": "^18.0.17",
     "@types/react-dom": "^18.0.6",
