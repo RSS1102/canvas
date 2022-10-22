@@ -1,6 +1,5 @@
 export const draw = (canvas: { getContext: (arg0: string) => any; setAttribute: (arg0: string, arg1: string) => void; }) => {
     // 构造星星
-    console.log(canvas)
     function Star(this: any, id: number, x: number, y: number) {
         this.id = id;
         this.x = x;
