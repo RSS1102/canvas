@@ -1,9 +1,10 @@
-export const drawTao = (el: HTMLCanvasElement ) => {
+const VITE__URL = import.meta.env.VITE__URL;
+export const drawTao = (el: HTMLCanvasElement) => {
   // 屏幕宽高
   const ScreenWidth = document.documentElement.clientWidth;
   const ScreenHight = document.documentElement.clientHeight;
   // 这里要写上全路径
-  const tao: string = "/src/assets/tao1.png";
+  const tao: string = VITE__URL + "/src/assets/tao1.png";
   let image: HTMLImageElement = new Image();
   image.src = tao;
   /**
