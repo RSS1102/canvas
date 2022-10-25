@@ -5,7 +5,6 @@ const Tao = () => {
     useEffect(() => {
         const el = document.querySelector('canvas')
         if (el) drawTao(el)
-
     }, [])
     return (
         <div className="tao">
