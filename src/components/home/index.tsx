@@ -10,8 +10,8 @@ export const Home = () => {
         if (el) draw(el, ctx)
     })
     return (
-        <div className="home">
-            <canvas id="canvas"></canvas>
+        <div className="home" >
+            <canvas></canvas>
         </div>
     )
 }

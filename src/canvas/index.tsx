@@ -15,11 +15,11 @@ function Index() {
                     <button onClick={() => { navigate(e) }}>{e.slice(e.lastIndexOf('/'))}</button>
                 </i>)
             })}</div>
-            <div >{
+            {
                 location.pathname === '/' ?
                     <Home></Home> :
                     <Outlet></Outlet>
-            }</div>
+            }
         </>
     )
 }
