@@ -72,7 +72,6 @@ export const drawTao = (el: HTMLCanvasElement) => {
       );
       taoArr[i].draw();
     }
-    console.log(taoArr);
   };
 
   const animate = () => {

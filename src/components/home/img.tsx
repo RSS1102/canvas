@@ -1,17 +1,31 @@
 const VITE__URL = import.meta.env.VITE__URL;
-export const draw = (el: HTMLCanvasElement, ctx: CanvasRenderingContext2D) => {
+export const draw = (el: HTMLCanvasElement, ctx: CanvasRenderingContext2D, imgDate: HTMLImageElement) => {
+    let img: HTMLImageElement
+    const imgSize = 500
     const image: HTMLImageElement = new Image();
     image.src = VITE__URL + '/src/assets/avatar.png';
     image.crossOrigin = ''
     // 要在image.onload之后调用，要不然第一次进入页面图片加载不正确
     image.onload = function () {
-        const imageWidth = image.width;
-        const imagehHeight = image.height;
+        if (imgDate.src) {
+            img = imgDate
+            console.log("更新前宽高", img.height, img.width)
+            const proportion = img.height / img.width
+            console.log("比例", proportion)
+            img.width = imgSize
+            img.height = imgSize * proportion
+        } else {
+            img = image;
+        }
+        
+        const imageWidth = img.width;
+        const imagehHeight = img.height;
+        console.log("更新后宽高", imageWidth, imagehHeight)
         // 重绘canvas
         el.setAttribute("width", imageWidth.toString());
         el.setAttribute("height", imagehHeight.toString());
         // 画图
-        ctx.drawImage(image, 0, 0)
+        ctx.drawImage(img, 0, 0, imageWidth, imagehHeight)
         // 拿到图片的资源
         const imgData = ctx.getImageData(0, 0, imageWidth, imagehHeight)
         // 重新绘制
