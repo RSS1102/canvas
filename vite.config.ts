@@ -12,6 +12,7 @@ export default defineConfig(({ command, mode }) => {
       alias: {
         "@": path.join(__dirname, "src"),
         "#": path.join(__dirname, "src/types"),
+        "~": path.join(__dirname, "src/assets"),
       },
     },
   };

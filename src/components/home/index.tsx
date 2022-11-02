@@ -17,7 +17,7 @@ export const Home = () => {
         if (el) draw(el, ctx, imgDom)
     }, [imgDate])
     return (
-        <div className="home" >
+        <div className="center" >
             <UpLoad getImgDate={getImgDate}></UpLoad>
             <img src={imgDate} />
             <canvas></canvas>
